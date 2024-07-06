@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USFWebAPI", "USFWebAPI.csproj", "{6164CD48-55E2-477B-9366-10606E121DF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6164CD48-55E2-477B-9366-10606E121DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6164CD48-55E2-477B-9366-10606E121DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6164CD48-55E2-477B-9366-10606E121DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6164CD48-55E2-477B-9366-10606E121DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC7E670C-8E14-432A-9FA6-BCE7196C7F20}
+	EndGlobalSection
+EndGlobal
