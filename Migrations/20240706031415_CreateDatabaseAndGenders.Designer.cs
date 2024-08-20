@@ -24,7 +24,7 @@ namespace USFWebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("USFWebAPI.Entities.Gender", b =>
+            modelBuilder.Entity("USFWebAPI.Models.Gender", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

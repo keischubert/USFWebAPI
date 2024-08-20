@@ -12,7 +12,7 @@ namespace USFWebAPI.Validations
 
                 if (string.IsNullOrEmpty(strValue) || char.IsLower(strValue[0]))
                 {
-                    return new ValidationResult(ErrorMessage ?? "The first letter must be upper");
+                    return new ValidationResult($"{validationContext.DisplayName} debe comenzar con mayúscula");
                 }
             }
 

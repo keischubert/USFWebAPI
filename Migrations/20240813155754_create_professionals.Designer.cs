@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using USFWebAPI;
 
@@ -11,9 +12,11 @@ using USFWebAPI;
 namespace USFWebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240813155754_create_professionals")]
+    partial class create_professionals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,40 +24,6 @@ namespace USFWebAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("USFWebAPI.Entities.Appointment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProfessionalId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QueueNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialtyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("ProfessionalId");
-
-                    b.HasIndex("SpecialtyId");
-
-                    b.ToTable("Appointments");
-                });
 
             modelBuilder.Entity("USFWebAPI.Entities.Gender", b =>
                 {
@@ -206,33 +175,6 @@ namespace USFWebAPI.Migrations
                     b.ToTable("Specialties");
                 });
 
-            modelBuilder.Entity("USFWebAPI.Entities.Appointment", b =>
-                {
-                    b.HasOne("USFWebAPI.Entities.Patient", "Patient")
-                        .WithMany("Appointments")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("USFWebAPI.Entities.Professional", "Professional")
-                        .WithMany("Appointments")
-                        .HasForeignKey("ProfessionalId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("USFWebAPI.Entities.Specialty", "Specialty")
-                        .WithMany("Appointments")
-                        .HasForeignKey("SpecialtyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("Professional");
-
-                    b.Navigation("Specialty");
-                });
-
             modelBuilder.Entity("USFWebAPI.Entities.Patient", b =>
                 {
                     b.HasOne("USFWebAPI.Entities.Gender", "Gender")
@@ -253,9 +195,9 @@ namespace USFWebAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("USFWebAPI.Entities.Specialty", "Specialty")
-                        .WithMany("Professionals")
+                        .WithMany()
                         .HasForeignKey("SpecialtyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Gender");
@@ -266,31 +208,12 @@ namespace USFWebAPI.Migrations
             modelBuilder.Entity("USFWebAPI.Entities.Service", b =>
                 {
                     b.HasOne("USFWebAPI.Entities.Specialty", "Specialty")
-                        .WithMany("Services")
+                        .WithMany()
                         .HasForeignKey("SpecialtyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Specialty");
-                });
-
-            modelBuilder.Entity("USFWebAPI.Entities.Patient", b =>
-                {
-                    b.Navigation("Appointments");
-                });
-
-            modelBuilder.Entity("USFWebAPI.Entities.Professional", b =>
-                {
-                    b.Navigation("Appointments");
-                });
-
-            modelBuilder.Entity("USFWebAPI.Entities.Specialty", b =>
-                {
-                    b.Navigation("Appointments");
-
-                    b.Navigation("Professionals");
-
-                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

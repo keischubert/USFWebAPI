@@ -1,14 +1,11 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using USFWebAPI.Validations;
 
-namespace USFWebAPI.Entities
+namespace USFWebAPI.DTOs
 {
-    public class Gender
+    public class CreateSpecialtyDTO
     {
-        public int Id { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = "{0} es obligatorio")]
         [StringLength(maximumLength: 20, ErrorMessage = "{0} no puede exceder {1} caracteres")]
         [FirstLetterUpperCase]
         [NoWhiteSpace]

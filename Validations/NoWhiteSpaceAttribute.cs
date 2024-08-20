@@ -13,12 +13,11 @@ namespace USFWebAPI.Validations
 
             if(value is string)
             {
-                //var firstSpace = value.ToString()[0];
                 var strValue = value as string;
 
                 if (string.IsNullOrEmpty(strValue) || char.IsWhiteSpace(strValue[0]))
                 {
-                    return new ValidationResult(ErrorMessage ?? "No empezar con espacios en blanco");
+                    return new ValidationResult($"{validationContext.DisplayName} no puede comenzar con espacio en blanco");
                 }
             }
 

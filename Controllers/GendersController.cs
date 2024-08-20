@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using USFWebAPI.DTOs;
 using USFWebAPI.Entities;
+using USFWebAPI.Services;
 
 namespace USFWebAPI.Controllers
 {
@@ -8,20 +12,55 @@ namespace USFWebAPI.Controllers
     [ApiController]
     public class GendersController : ControllerBase
     {
-        private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
+        private readonly IRepository<Gender> genderRepository;
 
-        public GendersController(ApplicationDbContext context)
+        public GendersController(IMapper mapper, IRepository<Gender> genderRepository)
         {
-            this.context = context;
+            this.mapper = mapper;
+            this.genderRepository = genderRepository;
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Gender gender)
+        public async Task<ActionResult<CreateGenderDTO>> CreateGender(CreateGenderDTO createGenderDTO)
         {
-            context.Genders.Add(gender);
-            await context.SaveChangesAsync();
+            try
+            {
+                var gender = mapper.Map<Gender>(createGenderDTO);
 
-            return Ok(gender);
+                await genderRepository.CreateAsync(gender);
+
+                return Ok(createGenderDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }       
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Gender>>> GetGenders()
+        {
+            var genders = await genderRepository.GetAllAsync();
+
+            var gendersDTO = mapper.Map<List<GenderDTO>>(genders);
+
+            return Ok(gendersDTO);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<GenderDTO>> GetGender(int id)
+        {
+            var gender = await genderRepository.GetByIdAsync(id);
+
+            if(gender == null)
+            {
+                return BadRequest($"No existe ningun genero con Id \"{id}\"");
+            }
+
+            var genderDTO = mapper.Map<GenderDTO>(gender);
+
+            return Ok(genderDTO);
         }
     }
 }
